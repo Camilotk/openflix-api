@@ -20,12 +20,14 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
+Route.post('/sessions', 'SessionController.create')
+
 Route.group(() => {
-  Route.get('/', 'UserController.index')
-  Route.get('/:id', 'UserController.show')
+  Route.get('/', 'UserController.index').middleware('auth')
+  Route.get('/:id', 'UserController.show').middleware('auth')
   Route.post('/', 'UserController.create').validator('CreateUser')
-  Route.put('/:id', 'UserController.update').validator('UpdateUser')
-  Route.delete('/:id', 'UserController.delete')
+  Route.put('/:id', 'UserController.update').validator('UpdateUser').middleware('auth')
+  Route.delete('/:id', 'UserController.delete').middleware('auth')
 }).prefix('users')
 
 Route.group(() => {
@@ -34,7 +36,7 @@ Route.group(() => {
   Route.post('/', 'ActorController.create').validator('CreateActor')
   Route.put('/:id', 'ActorController.update').validator('UpdateActor')
   Route.delete('/:id', 'ActorController.delete')
-}).prefix('actors')
+}).prefix('actors').middleware('auth')
 
 Route.group(() => {
   Route.get('/', 'DirectorController.index')
@@ -42,7 +44,7 @@ Route.group(() => {
   Route.post('/', 'DirectorController.create').validator('CreateDirector')
   Route.put('/:id', 'DirectorController.update').validator('UpdateDirector')
   Route.delete('/:id', 'DirectorController.delete')
-}).prefix('directors')
+}).prefix('directors').middleware('auth')
 
 Route.group(() => {
   Route.get('/', 'GenreController.index')
@@ -50,7 +52,7 @@ Route.group(() => {
   Route.post('/', 'GenreController.create').validator('CreateGenre')
   Route.put('/:id', 'GenreController.update').validator('UpdateGenre')
   Route.delete('/:id', 'GenreController.delete')
-}).prefix('genres')
+}).prefix('genres').middleware('auth')
 
 Route.group(() => {
   Route.get('/', 'TagController.index')
@@ -58,7 +60,7 @@ Route.group(() => {
   Route.post('/', 'TagController.create').validator('CreateTag')
   Route.put('/:id', 'TagController.update').validator('UpdateTag')
   Route.delete('/:id', 'TagController.delete')
-}).prefix('tags')
+}).prefix('tags').middleware('auth')
 
 Route.group(() => {
   Route.get('/', 'VideoController.index')
@@ -66,7 +68,7 @@ Route.group(() => {
   Route.post('/', 'VideoController.create').validator('CreateVideo')
   Route.put('/:id', 'VideoController.update').validator('UpdateVideo')
   Route.delete('/:id', 'VideoController.delete')
-}).prefix('video')
+}).prefix('video').middleware('auth')
 
 Route.group(() => {
   Route.get('/', 'VideoLinkController.index')
@@ -74,4 +76,4 @@ Route.group(() => {
   Route.post('/', 'VideoLinkController.create').validator('CreateLink')
   Route.put('/:id', 'VideoLinkController.update').validator('UpdateLink')
   Route.delete('/:id', 'VideoLinkController.delete')
-}).prefix('links')
+}).prefix('links').middleware('auth')
