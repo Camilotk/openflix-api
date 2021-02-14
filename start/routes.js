@@ -19,3 +19,59 @@ const Route = use('Route')
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
+
+Route.group(() => {
+  Route.get('/', 'UserController.index')
+  Route.get('/:id', 'UserController.show')
+  Route.post('/', 'UserController.create').validator('CreateUser')
+  Route.put('/:id', 'UserController.update').validator('UpdateUser')
+  Route.delete('/:id', 'UserController.delete')
+}).prefix('users')
+
+Route.group(() => {
+  Route.get('/', 'ActorController.index')
+  Route.get('/:id', 'ActorController.show')
+  Route.post('/', 'ActorController.create').validator('CreateActor')
+  Route.put('/:id', 'ActorController.update').validator('UpdateActor')
+  Route.delete('/:id', 'ActorController.delete')
+}).prefix('actors')
+
+Route.group(() => {
+  Route.get('/', 'DirectorController.index')
+  Route.get('/:id', 'DirectorController.show')
+  Route.post('/', 'DirectorController.create').validator('CreateDirector')
+  Route.put('/:id', 'DirectorController.update').validator('UpdateDirector')
+  Route.delete('/:id', 'DirectorController.delete')
+}).prefix('directors')
+
+Route.group(() => {
+  Route.get('/', 'GenreController.index')
+  Route.get('/:id', 'GenreController.show')
+  Route.post('/', 'GenreController.create').validator('CreateGenre')
+  Route.put('/:id', 'GenreController.update').validator('UpdateGenre')
+  Route.delete('/:id', 'GenreController.delete')
+}).prefix('genres')
+
+Route.group(() => {
+  Route.get('/', 'TagController.index')
+  Route.get('/:id', 'TagController.show')
+  Route.post('/', 'TagController.create').validator('CreateTag')
+  Route.put('/:id', 'TagController.update').validator('UpdateTag')
+  Route.delete('/:id', 'TagController.delete')
+}).prefix('tags')
+
+Route.group(() => {
+  Route.get('/', 'VideoController.index')
+  Route.get('/:id', 'VideoController.show')
+  Route.post('/', 'VideoController.create').validator('CreateVideo')
+  Route.put('/:id', 'VideoController.update').validator('UpdateVideo')
+  Route.delete('/:id', 'VideoController.delete')
+}).prefix('video')
+
+Route.group(() => {
+  Route.get('/', 'VideoLinkController.index')
+  Route.get('/:id', 'VideoLinkController.show')
+  Route.post('/', 'VideoLinkController.create').validator('CreateLink')
+  Route.put('/:id', 'VideoLinkController.update').validator('UpdateLink')
+  Route.delete('/:id', 'VideoLinkController.delete')
+}).prefix('links')
