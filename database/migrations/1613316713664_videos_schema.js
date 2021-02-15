@@ -4,20 +4,6 @@
 const Schema = use('Schema')
 
 class VideosSchema extends Schema {
-  /*
-  $table->id();
-            $table->string('title', 200);
-            $table->unsignedBigInteger('link');
-            $table->longText('description')->nullable();
-            $table->string('imdb_id')->nullable();
-            $table->string('duration_seconds')->nullable(); -
-            $table->string('thumbnail', 200)->nullable();
-            $table->string('poster', 200)->nullable();
-            $table->year('release_year', 4)->nullable();
-            $table->string('maturity_rating', 50)->nullable();
-            $table->boolean('subtitle');
-            $table->timestamps();
-  */
   up () {
     this.create('videos', (table) => {
       table.increments()
