@@ -3,10 +3,9 @@
 const User = use("App/Models/User")
 
 class UserController {
-
-  async index({ request }) {
+  async index({ request, transform }) {
     const users = await User.all()
-    return users
+    return transform.collection(users, 'UserTransformer')
   }
 
   async create({ request, response }) {
