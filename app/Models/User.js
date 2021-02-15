@@ -7,6 +7,13 @@ const Model = use('Model')
 const Hash = use('Hash')
 
 class User extends Model {
+  static get traits () {
+    return [
+      '@provider:Adonis/Acl/HasRole',
+      '@provider:Adonis/Acl/HasPermission'
+    ]
+  }
+  
   static boot () {
     super.boot()
 
