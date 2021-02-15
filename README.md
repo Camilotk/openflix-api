@@ -1,4 +1,4 @@
-# OpenFlix
+![Openflix Logo](https://i.ibb.co/8Y974XM/Novo-Projeto-1.png)
 
 This is the backend api of a open source video CMS licenced under MIT license. You can use it as you want, including making your own modifications and even close the source without any cost or warranty. The main goal of this code is to serve for anyone who wants to start a project of a Video Plataform, Streamming or OTT.
 
