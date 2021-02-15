@@ -36,7 +36,7 @@ Route.group(() => {
   Route.post('/', 'ActorController.create').validator('CreateActor')
   Route.put('/:id', 'ActorController.update').validator('UpdateActor')
   Route.delete('/:id', 'ActorController.delete')
-}).prefix('actors').middleware('auth')
+}).prefix('actors').middleware(['auth', 'is:administrator'])
 
 Route.group(() => {
   Route.get('/', 'DirectorController.index')
@@ -44,7 +44,7 @@ Route.group(() => {
   Route.post('/', 'DirectorController.create').validator('CreateDirector')
   Route.put('/:id', 'DirectorController.update').validator('UpdateDirector')
   Route.delete('/:id', 'DirectorController.delete')
-}).prefix('directors').middleware('auth')
+}).prefix('directors').middleware(['auth', 'is:administrator'])
 
 Route.group(() => {
   Route.get('/', 'GenreController.index')
@@ -52,7 +52,7 @@ Route.group(() => {
   Route.post('/', 'GenreController.create').validator('CreateGenre')
   Route.put('/:id', 'GenreController.update').validator('UpdateGenre')
   Route.delete('/:id', 'GenreController.delete')
-}).prefix('genres').middleware('auth')
+}).prefix('genres').middleware(['auth', 'is:administrator'])
 
 Route.group(() => {
   Route.get('/', 'TagController.index')
@@ -60,7 +60,7 @@ Route.group(() => {
   Route.post('/', 'TagController.create').validator('CreateTag')
   Route.put('/:id', 'TagController.update').validator('UpdateTag')
   Route.delete('/:id', 'TagController.delete')
-}).prefix('tags').middleware('auth')
+}).prefix('tags').middleware(['auth', 'is:administrator'])
 
 Route.group(() => {
   Route.get('/', 'VideoController.index')
@@ -68,7 +68,7 @@ Route.group(() => {
   Route.post('/', 'VideoController.create').validator('CreateVideo')
   Route.put('/:id', 'VideoController.update').validator('UpdateVideo')
   Route.delete('/:id', 'VideoController.delete')
-}).prefix('video').middleware('auth')
+}).prefix('video').middleware(['auth', 'is:administrator'])
 
 Route.group(() => {
   Route.get('/', 'VideoLinkController.index')
@@ -76,4 +76,4 @@ Route.group(() => {
   Route.post('/', 'VideoLinkController.create').validator('CreateLink')
   Route.put('/:id', 'VideoLinkController.update').validator('UpdateLink')
   Route.delete('/:id', 'VideoLinkController.delete')
-}).prefix('links').middleware('auth')
+}).prefix('links').middleware(['auth', 'is:administrator'])
