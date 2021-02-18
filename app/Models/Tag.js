@@ -6,7 +6,6 @@ const Model = use('Model')
 class Tag extends Model {
   videos () {
     return this.belongsToMany('App/Models/Video')
-               .withPivot(['name'])
   }
 }
 

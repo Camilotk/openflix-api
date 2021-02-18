@@ -19,7 +19,6 @@ class Video extends Model {
 
   tags() {
     return this.belongsToMany('App/Models/Tag')
-               .withPivot(['name'])
   }
 
   actors() {

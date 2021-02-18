@@ -8,7 +8,7 @@ class UserController {
     return transform.collection(users, 'UserTransformer')
   }
 
-  async create({ request, response }) {
+  async store({ request, response }) {
      const user = await User.create(request.all())
      return response.status(201).send(user)
   }

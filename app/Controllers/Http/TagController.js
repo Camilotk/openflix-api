@@ -4,6 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Tag = use('App/Models/Tag')
+
 /**
  * Resourceful controller for interacting with tags
  */
@@ -17,7 +19,11 @@ class TagController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index ({ params, request, response, transform }) {
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 15)
+    const tags = await Tag.query().paginate(page, limit)
+    return transform.paginate(tags, 'TagTransformer')
   }
 
   /**
@@ -87,6 +93,12 @@ class TagController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+  }
+
+  async videos({params, response}) {
+    const tag = await Tag.findOrFail(params.id)
+    const videos = tag.videos().fetch()
+    return videos
   }
 }
 

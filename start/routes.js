@@ -25,7 +25,7 @@ Route.post('/sessions', 'SessionController.create')
 Route.group(() => {
   Route.get('/', 'UserController.index').middleware('auth')
   Route.get('/:id', 'UserController.show').middleware('auth')
-  Route.post('/', 'UserController.create').validator('CreateUser')
+  Route.post('/', 'UserController.store').validator('CreateUser')
   Route.put('/:id', 'UserController.update').validator('UpdateUser').middleware('auth')
   Route.delete('/:id', 'UserController.delete').middleware('auth')
 }).prefix('users')
@@ -33,7 +33,7 @@ Route.group(() => {
 Route.group(() => {
   Route.get('/', 'ActorController.index')
   Route.get('/:id', 'ActorController.show')
-  Route.post('/', 'ActorController.create').validator('CreateActor')
+  Route.post('/', 'ActorController.store').validator('CreateActor')
   Route.put('/:id', 'ActorController.update').validator('UpdateActor')
   Route.delete('/:id', 'ActorController.delete')
 }).prefix('actors').middleware(['auth', 'is:administrator'])
@@ -60,6 +60,7 @@ Route.group(() => {
   Route.post('/', 'TagController.create').validator('CreateTag')
   Route.put('/:id', 'TagController.update').validator('UpdateTag')
   Route.delete('/:id', 'TagController.delete')
+  Route.get('/:id/videos', 'TagController.videos')
 }).prefix('tags').middleware(['auth', 'is:administrator'])
 
 Route.group(() => {
