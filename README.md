@@ -1,15 +1,9 @@
-# OpenFlix
-
+![Openflix Logo](https://i.ibb.co/ZcKq5Rk/openflix-logo.png)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![](https://img.shields.io/badge/node->=%20v8.8.0-blue)]()
+![](https://img.shields.io/github/last-commit/Camilotk/openflix-api)
+<hr>
 This is the backend api of a open source video CMS licenced under MIT license. You can use it as you want, including making your own modifications and even close the source without any cost or warranty. The main goal of this code is to serve for anyone who wants to start a project of a Video Plataform, Streamming or OTT.
-
-1. Bodyparser
-2. Session
-3. Authentication
-4. Web security middleware
-5. CORS
-6. Edge template engine
-7. Lucid ORM
-8. Migrations and seeds
 
 ## Requirements
 - Node.js >= 8.0.0
