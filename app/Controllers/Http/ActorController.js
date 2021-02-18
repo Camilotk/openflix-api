@@ -4,6 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Actor = use('App/Models/Actor')
+
 /**
  * Resourceful controller for interacting with actors
  */
@@ -17,19 +19,11 @@ class ActorController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-  }
-
-  /**
-   * Render a form to be used for creating a new actor.
-   * GET actors/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async index ({ request, transform }) {
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 15)
+    const actors = await Actor.query().paginate(page, limit)
+    return transform.paginate(actors, 'ActorTransformer')
   }
 
   /**
@@ -40,7 +34,9 @@ class ActorController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, response }) { 
+    const actor = await Actor.create(request.all())
+    return response.status(201).send(actor)
   }
 
   /**
@@ -52,7 +48,9 @@ class ActorController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params, request, response, view, transform }) {
+    const actor = await Actor.findOrFail(params.id)
+    return actor
   }
 
   /**
