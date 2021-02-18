@@ -14,7 +14,6 @@ class CreateTag {
 
   get messages () {
     return {
-      'name.required': 'You must provide a name',
       'name.string': 'Invalid input type for name',
       'name.min': 'The name must have at least 4 characters'
     }
