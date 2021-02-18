@@ -1,6 +1,6 @@
 'use strict'
 
-const BumblebeeTransformer = use('Bumblebee/Transformer')
+const OpenflixTransformer = use('App/Transformers/OpenflixTransformer')
 
 /**
  * UserTransformer class
@@ -8,14 +8,15 @@ const BumblebeeTransformer = use('Bumblebee/Transformer')
  * @class UserTransformer
  * @constructor
  */
-class UserTransformer extends BumblebeeTransformer {
+class UserTransformer extends OpenflixTransformer {
   /**
    * This method is used to transform the data.
    */
   transform (model) {
     return {
       name: model.username,
-      email: model.email
+      email: model.email,
+      links: this.mountLinksWith('users', model.id).getHateoas()
     }
   }
 }
