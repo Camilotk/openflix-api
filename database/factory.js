@@ -17,8 +17,8 @@ const Hash = use('Hash')
 
 Factory.blueprint('Adonis/Acl/Role', async (faker) => {
   return {
-    slug: 'Administrator',
-    name: 'Administrator'
+    slug: 'administrator',
+    name: 'administrator'
   }
 })
 
