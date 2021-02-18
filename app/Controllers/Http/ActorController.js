@@ -23,7 +23,7 @@ class ActorController {
     const page = request.input('page', 1)
     const limit = request.input('limit', 15)
     const actors = await Actor.query().paginate(page, limit)
-    return transform.paginate(actors, 'ActorTransformer')
+    return transform.paginate(actors, 'ActorsTransformer')
   }
 
   /**
@@ -50,19 +50,7 @@ class ActorController {
    */
   async show ({ params, request, response, view, transform }) {
     const actor = await Actor.findOrFail(params.id)
-    return actor
-  }
-
-  /**
-   * Render a form to update an existing actor.
-   * GET actors/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+    return transform.item(actor, 'ActorTransformer')
   }
 
   /**
@@ -74,6 +62,10 @@ class ActorController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    const actor = await Actor.findOrFail(params.id)
+    actor.merge(request.all())
+    await actor.save()
+    return actor
   }
 
   /**
@@ -85,6 +77,9 @@ class ActorController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    const actor = await Actor.findOrFail(params.id)
+    await actor.delete()
+    return response.status(204).send()
   }
 }
 
