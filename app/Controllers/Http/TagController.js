@@ -23,19 +23,7 @@ class TagController {
     const page = request.input('page', 1)
     const limit = request.input('limit', 15)
     const tags = await Tag.query().paginate(page, limit)
-    return transform.paginate(tags, 'TagTransformer')
-  }
-
-  /**
-   * Render a form to be used for creating a new tag.
-   * GET tags/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+    return transform.paginate(tags, 'TagsTransformer')
   }
 
   /**
@@ -47,6 +35,8 @@ class TagController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    const tag = await Tag.create(request.all())
+    return response.status(201).send(tag)
   }
 
   /**
@@ -58,19 +48,9 @@ class TagController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
-
-  /**
-   * Render a form to update an existing tag.
-   * GET tags/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+  async show ({ params, request, response, transform }) {
+    const tag = await Tag.findOrFail(params.id)
+    return transform.item(tag, 'TagTransformer')
   }
 
   /**
@@ -82,6 +62,10 @@ class TagController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    const tag = await Tag.findOrFail(params.id)
+    tag.merge(request.all())
+    await tag.save()
+    return tag
   }
 
   /**
@@ -93,8 +77,19 @@ class TagController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    const tag = await Tag.findOrFail(params.id)
+    await tag.delete()
+    return response.status(204).send()
   }
 
+  /**
+   * Return all videos from tag.
+   * GET tags/:id/videos
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
   async videos({params, response}) {
     const tag = await Tag.findOrFail(params.id)
     const videos = tag.videos().fetch()
