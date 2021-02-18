@@ -14,7 +14,6 @@ class Video extends Model {
 
   genres() {
     return this.belongsToMany('App/Models/Genre')
-               .withPivot(['name'])
   }
 
   tags() {
@@ -23,7 +22,6 @@ class Video extends Model {
 
   actors() {
     return this.belongsToMany('App/Models/Actor')
-               .withPivot(['name'])
   }
 }
 

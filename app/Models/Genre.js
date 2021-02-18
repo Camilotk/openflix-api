@@ -6,7 +6,6 @@ const Model = use('Model')
 class Genre extends Model {
   videos () {
     return this.belongsToMany('App/Models/Video')
-               .withPivot(['name'])
   }
 }
 
