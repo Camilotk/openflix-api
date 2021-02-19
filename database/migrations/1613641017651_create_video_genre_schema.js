@@ -5,7 +5,7 @@ const Schema = use('Schema')
 
 class CreateVideoGenreSchema extends Schema {
   up () {
-    this.create('video_genres', (table) => {
+    this.create('genre_video', (table) => {
       table.increments()
       table.integer('video_id').unsigned().index()
       table.integer('genre_id').unsigned().index()
@@ -16,7 +16,7 @@ class CreateVideoGenreSchema extends Schema {
   }
 
   down () {
-    this.drop('video_genres')
+    this.drop('genre_video')
   }
 }
 

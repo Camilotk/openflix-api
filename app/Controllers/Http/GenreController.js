@@ -4,6 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Genre = use('App/Models/Genre')
+
 /**
  * Resourceful controller for interacting with genres
  */
@@ -17,19 +19,11 @@ class GenreController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-  }
-
-  /**
-   * Render a form to be used for creating a new genre.
-   * GET genres/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async index ({ request, transform }) {
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 15)
+    const genres = await Genre.query().paginate(page, limit)
+    return transform.paginate(genres, 'GenresTransformer')
   }
 
   /**
@@ -41,6 +35,8 @@ class GenreController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    const genre = await Genre.create(request.all())
+    return response.status(201).send(genre)
   }
 
   /**
@@ -52,19 +48,9 @@ class GenreController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
-
-  /**
-   * Render a form to update an existing genre.
-   * GET genres/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+  async show ({ params, transform }) {
+    const genre = await Genre.findOrFail(params.id)
+    return transform.item(genre, 'GenreTransformer')
   }
 
   /**
@@ -76,6 +62,10 @@ class GenreController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    const genre = await Genre.findOrFail(params.id)
+    genre.merge(request.all())
+    await genre.save()
+    return genre
   }
 
   /**
@@ -87,6 +77,23 @@ class GenreController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    const genre = await Genre.findOrFail(params.id)
+    await genre.delete()
+    return response.status(204).send()
+  }
+
+  /**
+   * Return all videos from genre.
+   * GET genres/:id/videos
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async videos({params, response}) {
+    const genre = await Genre.findOrFail(params.id)
+    const videos = genre.videos().fetch()
+    return videos
   }
 }
 

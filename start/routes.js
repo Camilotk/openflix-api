@@ -52,6 +52,7 @@ Route.group(() => {
   Route.post('/', 'GenreController.store').validator('CreateGenre')
   Route.put('/:id', 'GenreController.update').validator('UpdateGenre')
   Route.delete('/:id', 'GenreController.destroy')
+  Route.get('/:id/videos', 'GenreController.videos')
 }).prefix('genres').middleware(['auth', 'is:administrator'])
 
 Route.group(() => {
