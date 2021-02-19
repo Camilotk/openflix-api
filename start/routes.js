@@ -44,6 +44,7 @@ Route.group(() => {
   Route.post('/', 'DirectorController.store').validator('CreateDirector')
   Route.put('/:id', 'DirectorController.update').validator('UpdateDirector')
   Route.delete('/:id', 'DirectorController.destroy')
+  Route.get('/:id/videos', 'GenreController.videos')
 }).prefix('directors').middleware(['auth', 'is:administrator'])
 
 Route.group(() => {
