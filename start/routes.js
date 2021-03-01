@@ -80,3 +80,8 @@ Route.group(() => {
   Route.put('/:id', 'VideoLinkController.update').validator('UpdateLink')
   Route.delete('/:id', 'VideoLinkController.destroy')
 }).prefix('links').middleware(['auth', 'is:administrator'])
+
+Route.group(() => {
+  Route.get('/thumbnail/:thumbnail', 'ContentController.showThumbnail')
+  Route.get('/video/:path/:video', 'ContentController.showVideo')
+}).prefix('content')
