@@ -4,6 +4,11 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Helpers = use('Helpers')
+const Video = use('App/Models/Video')
+
+const { exec } = require('child_process')
+
 /**
  * Resourceful controller for interacting with videos
  */
@@ -17,7 +22,17 @@ class VideoController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+
+  async index ({ request, transform }) {
+    
+  }
+
+  async index ({ request, transform }) {
+
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 15)
+    const videos = await Video.query().paginate(page, limit)
+    return transform.paginate(videos, 'VideosTransformer')
   }
 
   /**
@@ -29,7 +44,39 @@ class VideoController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create ({ request, response, view }) {
+  async create ({ request, auth, view }) {
+
+    const videoFile = request.file('video', {
+      types: ['video'],
+      size: '2gb'
+    })
+
+    await videoFile.move(Helpers.tmpPath(`uploads`), { overwrite: true })
+
+    if(!videoFile.moved()) {
+      return video.error() 
+    }
+
+    console.log("Started the video enconding!")
+    
+    const encodeStatus = exec('npm run encode')
+
+    encodeStatus.stdout.on('data', function(data) {
+      console.log(data); 
+    });
+  
+    const video = await Video.create(request.all())
+    
+    const video_name = videoFile.fileName.split('.').slice(0, -1).join('.')
+
+    await video.links().create({ 
+      url: `${video_name}/${videoFile.fileName}`, 
+      url_720: `${video_name}/${video_name}-720.${videoFile.extname}`,
+      url_360: `${video_name}/${video_name}-360.${videoFile.extname}`,
+      url_140: `${video_name}/${video_name}-140.${videoFile.extname}`
+    })
+    
+    return { status: "Ok" }
   }
 
   /**

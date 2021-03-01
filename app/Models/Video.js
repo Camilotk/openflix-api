@@ -4,7 +4,7 @@
 const Model = use('Model')
 
 class Video extends Model {
-  link() {
+  links() {
     return this.hasOne('App/Models/VideoLink')
   }
 

@@ -68,10 +68,10 @@ Route.group(() => {
 Route.group(() => {
   Route.get('/', 'VideoController.index')
   Route.get('/:id', 'VideoController.show')
-  Route.post('/', 'VideoController.store').validator('CreateVideo')
+  Route.post('/',  'VideoController.create')
   Route.put('/:id', 'VideoController.update').validator('UpdateVideo')
   Route.delete('/:id', 'VideoController.destroy')
-}).prefix('video').middleware(['auth', 'is:administrator'])
+}).prefix('videos').middleware(['auth', 'is:administrator'])
 
 Route.group(() => {
   Route.get('/', 'VideoLinkController.index')
