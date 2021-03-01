@@ -9,6 +9,9 @@ This is the backend api of a open source video CMS licenced under MIT license. Y
 - Node.js >= 8.0.0
 - npm >= 3.0.0
 - git
+- [ffmpeg](https://ffmpeg.org/ffmpeg.html)
+- [ffprobe](https://ffmpeg.org/ffprobe.html)
+- [MP4Box](https://github.com/gpac/gpac/wiki/MP4Box)
 
 ## Running the project
 1. Configure your .env file
