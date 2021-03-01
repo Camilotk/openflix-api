@@ -71,7 +71,7 @@ Route.group(() => {
   Route.post('/',  'VideoController.create')
   Route.put('/:id', 'VideoController.update').validator('UpdateVideo')
   Route.delete('/:id', 'VideoController.destroy')
-}).prefix('videos').middleware(['auth', 'is:administrator'])
+}).prefix('videos')
 
 Route.group(() => {
   Route.get('/', 'VideoLinkController.index')
@@ -79,7 +79,7 @@ Route.group(() => {
   Route.post('/', 'VideoLinkController.store').validator('CreateLink')
   Route.put('/:id', 'VideoLinkController.update').validator('UpdateLink')
   Route.delete('/:id', 'VideoLinkController.destroy')
-}).prefix('links').middleware(['auth', 'is:administrator'])
+}).prefix('links')
 
 Route.group(() => {
   Route.get('/thumbnail/:thumbnail', 'ContentController.showThumbnail')

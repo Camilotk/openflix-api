@@ -22,7 +22,7 @@ class VideosTransformer extends OpenflixTransformer {
     return {
       title: model.title,
       description: model.description,
-      thumbnail_url: 'http://localhost:3333/content/thumbnail/default.jpg',
+      thumbnail: 'http://localhost:3333/content/thumbnail/default.jpg',
     }
   }
 
