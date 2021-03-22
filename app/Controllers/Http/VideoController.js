@@ -6,6 +6,7 @@
 
 const Helpers = use('Helpers')
 const Video = use('App/Models/Video')
+const Env = use('Env')
 
 const { exec } = require('child_process')
 
@@ -46,6 +47,9 @@ class VideoController {
    */
   async create ({ request, auth, view }) {
 
+    const { title } = request.only(['title'])
+    console.log(title)
+
     const videoFile = request.file('video', {
       types: ['video'],
       size: '2gb'
@@ -54,7 +58,7 @@ class VideoController {
     await videoFile.move(Helpers.tmpPath(`uploads`), { overwrite: true })
 
     if(!videoFile.moved()) {
-      return video.error() 
+      return videoFile.error() 
     }
 
     console.log("Started the video enconding!")
@@ -64,8 +68,34 @@ class VideoController {
     encodeStatus.stdout.on('data', function(data) {
       console.log(data); 
     });
+
+    const imageFile = request.file('thumbnail', {
+      types: ['image'],
+      size: '500mb'
+    })
+
+    let thumbnail = request.file('thumbnail') || false
+
+    if (thumbnail && Object.keys(thumbnail).length > 0){
+      await imageFile.move(Helpers.tmpPath(`thumbnails`), { 
+        name: `${title}.${imageFile.extname}`, 
+        overwrite: true
+      })
+
+      if(!imageFile.moved()) {
+        return imageFile.error() 
+      }
+      const image_name = videoFile.fileName.split('.').slice(0, -1).join('.')
+      thumbnail = imageFile.fileName
+    } else {
+      thumbnail = 'default.jpg'
+    }
   
-    const video = await Video.create(request.all())
+    const video = await Video.create({
+      ...request.all(),
+      title: title,
+      thumbnail_url: thumbnail
+    })
     
     const video_name = videoFile.fileName.split('.').slice(0, -1).join('.')
 

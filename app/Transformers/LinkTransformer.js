@@ -1,6 +1,7 @@
 'use strict'
 
 const BumblebeeTransformer = use('Bumblebee/Transformer')
+const Env = use('Env')
 
 /**
  * LinkTransformer class
@@ -14,8 +15,8 @@ class LinkTransformer extends BumblebeeTransformer {
    */
   transform (model) {
     return {
-      url_1080: model.url,
-      url_720: model.url_720,
+      url_1080: `${Env.get('APP_URL')}/content/video/${model.url}`,
+      url_720: `${Env.get('APP_URL')}/content/video/${model.url_720}`,
       url_360: model.url_360,
       url_140: model.url_140
     }

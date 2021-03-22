@@ -1,6 +1,7 @@
 'use strict'
 
 const OpenflixTransformer = use('App/Transformers/OpenflixTransformer')
+const Env = use('Env')
 
 /**
  * VideosTransformer class
@@ -22,7 +23,7 @@ class VideosTransformer extends OpenflixTransformer {
     return {
       title: model.title,
       description: model.description,
-      thumbnail: 'http://localhost:3333/content/thumbnail/default.jpg',
+      thumbnail: `${Env.get('APP_URL')}/content/thumbnails/${model.thumbnail_url}`,
     }
   }
 
