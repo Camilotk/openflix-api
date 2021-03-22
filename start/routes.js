@@ -82,6 +82,6 @@ Route.group(() => {
 }).prefix('links')
 
 Route.group(() => {
-  Route.get('/thumbnail/:thumbnail', 'ContentController.showThumbnail')
+  Route.get('/thumbnails/:thumbnail', 'ContentController.showThumbnail')
   Route.get('/video/:path/:video', 'ContentController.showVideo')
 }).prefix('content')
