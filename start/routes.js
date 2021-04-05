@@ -75,7 +75,7 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get('/', 'VideoLinkController.index')
-  Route.get('/:id', 'VideoLinkController.show')
+  Route.get('/:title', 'VideoLinkController.show')
   Route.post('/', 'VideoLinkController.store').validator('CreateLink')
   Route.put('/:id', 'VideoLinkController.update').validator('UpdateLink')
   Route.delete('/:id', 'VideoLinkController.destroy')

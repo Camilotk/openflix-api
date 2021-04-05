@@ -78,8 +78,7 @@ class VideoController {
 
     if (thumbnail && Object.keys(thumbnail).length > 0){
       await imageFile.move(Helpers.tmpPath(`thumbnails`), { 
-        name: `${title}.${imageFile.extname}`, 
-        overwrite: true
+        name: `${title}.${imageFile.extname}`
       })
 
       if(!imageFile.moved()) {
@@ -130,6 +129,8 @@ class VideoController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    const video = await Video.findOrFail('title', params.title)
+    return transform.item(video, 'VideoTransformer')
   }
 
   /**
